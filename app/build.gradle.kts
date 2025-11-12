@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp) // Enables annotation processing (Room uses this)
 }
 
 android {
@@ -56,4 +57,9 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.room.runtime) // Core Room library — creates and manages the database
+    implementation(libs.room.ktx) // Adds coroutine + Flow support for Room
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6") // Allows Compose to observe ViewModels
+    implementation("androidx.compose.material:material-icons-extended") // Adds extra Material icons
+    ksp(libs.room.compiler)
 }
