@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,9 +36,8 @@ class MainActivity : ComponentActivity() {
                 SmallTopAppBarExample()
             }
 
-            VerticalDiv()
-            VerticalDiv()
-            VerticalDiv()
+
+
 
         }
     }
@@ -70,24 +71,51 @@ fun SmallTopAppBarExample() {
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 title = {
-                    Text("Small Top App Bar")
+                    Text("Recipes")
                 }
 
             )
         },
+        bottomBar = {
+            BottomAppBar(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.primary,
+            ) {
+                Text(
+                    text = "Bottom bar content",
+
+
+                )
+            }
+
+
+        }
+
+
 
 
 
     ) { innerPadding ->
 
-        Greeting(
-            name = "Android",
+
+        Text(text = "Yellow Helicopter", modifier = Modifier.padding(innerPadding))
+
+        Column(
             modifier = Modifier
-                .padding(innerPadding)
+                .background(Color.LightGray)
+                .padding(innerPadding),
 
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(50.dp)
 
-        )
-        Text(text = "Yellow Helicopter")
+        ) {
+            Text(
+                text = "Item 1",
+                modifier = Modifier.padding(20.dp)
+
+            )
+            Text("Item 2")
+        }
 
 
     }
@@ -112,6 +140,23 @@ fun VerticalDiv() {
     ) {
         Text("Item 1")
         Text("Item 2")
+    }
+
+}
+
+@Composable
+fun VerticalDiv2() {
+
+    Column(
+        modifier = Modifier
+            .background(Color.Cyan)
+            .padding(30.dp)
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+
+    ) {
+        Text("Item 3")
+        Text("Item 4")
     }
 
 }
