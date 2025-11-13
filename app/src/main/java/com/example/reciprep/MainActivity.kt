@@ -4,13 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,22 +29,62 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
 import com.example.reciprep.ui.theme.ReciprepTheme
+import kotlin.getValue
+import androidx.room.Room
+import com.example.reciprep.data.AppDatabase
+import com.example.reciprep.data.Recipe
+import com.example.reciprep.data.RecipeDAO
+import com.example.reciprep.model.RecipeViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
 
 class MainActivity : ComponentActivity() {
+
+
+    private val db by lazy {
+
+        Room.databaseBuilder(
+            applicationContext,
+            klass = AppDatabase::class.java,
+            name = "recipes.db"
+        )
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    private val recipeVm: RecipeViewModel by viewModels { RecipeViewModel.factory(db) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+//        lifecycleScope.launch(Dispatchers.IO){
+//            val count = recipeVm.countRecipesSync()
+//
+//        }
+
+
+
+//        recipeVm.allRecipes
         enableEdgeToEdge()
         setContent {
+
+
             ReciprepTheme {
+                // A surface container using the 'background' color from the theme
+
                 SmallTopAppBarExample()
+
+
             }
-
-
 
 
         }
     }
+
 }
 
 @Composable
@@ -72,6 +116,7 @@ fun SmallTopAppBarExample() {
                 ),
                 title = {
                     Text("Recipes")
+
                 }
 
             )
@@ -100,18 +145,43 @@ fun SmallTopAppBarExample() {
 
         Text(text = "Yellow Helicopter", modifier = Modifier.padding(innerPadding))
 
+
+
         Column(
             modifier = Modifier
+                .fillMaxWidth()
                 .background(Color.LightGray)
                 .padding(innerPadding),
 
+
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(50.dp)
+
 
         ) {
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Box(
+                modifier = Modifier
+                    .background(Color.Magenta)
+                    .padding(50.dp)
+
+
+
+            ){            Text(text = "Inside the Box")
+            };
+
+
+            Text(
+                text = "Yelow Submarine",
+                modifier = Modifier.padding(50.dp)
+
+
+            )
+
             Text(
                 text = "Item 1",
-                modifier = Modifier.padding(20.dp)
+
 
             )
             Text("Item 2")

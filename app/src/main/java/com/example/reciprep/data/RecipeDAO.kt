@@ -12,6 +12,9 @@ interface RecipeDAO {
     @Query("SELECT * FROM recipes")
     fun getAll(): Flow<List<Recipe>>
 
+    @Query("SELECT COUNT(*) FROM recipes")
+    fun countAllRecipesSync(): Int
+
     @Insert
     suspend fun insert(recipe: Recipe)
 

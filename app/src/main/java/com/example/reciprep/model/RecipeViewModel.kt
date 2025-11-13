@@ -50,6 +50,10 @@ class RecipeViewModel(private val recipeDao: RecipeDAO) : ViewModel() {
         }
     }
 
+    fun countRecipesSync(): Int {
+        return recipeDao.countAllRecipesSync()
+    }
+
     companion object {
 
         fun factory(db: AppDatabase) = object : ViewModelProvider.Factory {
