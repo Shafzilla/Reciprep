@@ -1,5 +1,7 @@
 package com.example.reciprep
 
+import android.R
+import android.R.attr.onClick
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,19 +13,30 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,8 +50,11 @@ import com.example.reciprep.data.AppDatabase
 import com.example.reciprep.data.Recipe
 import com.example.reciprep.data.RecipeDAO
 import com.example.reciprep.model.RecipeViewModel
+import com.example.reciprep.screen.ViewRecipes
+import com.example.reciprep.ui.theme.PurpleGrey40
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
 
 
 class MainActivity : ComponentActivity() {
@@ -61,22 +77,34 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
 
-//        lifecycleScope.launch(Dispatchers.IO){
-//            val count = recipeVm.countRecipesSync()
-//
-//        }
+
+//        recipeVm.addRecipe(name = "Cookies",
+//            prepTime = 15,
+//            cookTime =20,
+//            servings = 8,
+//            ingredients = "1 cup flour\n1 stick butter\n1/2 cup sugar",
+//            steps = "1. preheat oven to 350F\n2. mix ingredients\n3. bake for 20 minutes",
+//            photoPath = "")
 
 
 
-//        recipeVm.allRecipes
+
+
+
+
         enableEdgeToEdge()
         setContent {
 
 
             ReciprepTheme {
+
+                val modifer = Modifier
+                    .fillMaxSize()
+                    .background(Color.LightGray)
+                    .padding(16.dp)
                 // A surface container using the 'background' color from the theme
 
-                SmallTopAppBarExample()
+                ViewRecipes(recipeVm, modifer)
 
 
             }
@@ -163,13 +191,56 @@ fun SmallTopAppBarExample() {
 
             Box(
                 modifier = Modifier
-                    .background(Color.Magenta)
+                    .background(Color.Magenta, shape = RoundedCornerShape(15.dp))
+
                     .padding(50.dp)
 
 
 
             ){            Text(text = "Inside the Box")
             };
+
+            Box(
+
+                modifier = Modifier
+                    .background(Color.Green, shape = RoundedCornerShape(15.dp))
+
+                    .padding(16.dp),
+
+                contentAlignment = Alignment.Center
+
+            ) {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+
+
+                ) {
+
+
+
+
+
+                    item {
+                        Text(
+                            text = "Item A",
+                            color = Color.White,
+                            modifier = Modifier
+                            .size(150.dp)
+                        )
+
+
+
+
+                    }
+
+
+
+                }
+            }
+
+
 
 
             Text(
@@ -230,5 +301,9 @@ fun VerticalDiv2() {
     }
 
 }
+
+
+
+
 
 

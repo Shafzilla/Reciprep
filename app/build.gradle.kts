@@ -62,4 +62,5 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6") // Allows Compose to observe ViewModels
     implementation("androidx.compose.material:material-icons-extended") // Adds extra Material icons
     ksp(libs.room.compiler)
+    implementation(libs.androidx.navigation.compose) // Navigation component for Compose
 }
